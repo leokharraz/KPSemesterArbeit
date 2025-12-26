@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36518.9 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualPetC#", "VirtualPetC#\VirtualPetC#.csproj", "{0803F3F6-8AA1-41C7-B796-FE3BBB5B7AC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualPetC#", "VirtualPetC#\VirtualPetC#.csproj", "{D932BF71-7065-4E15-9796-CA6F28DF146C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0803F3F6-8AA1-41C7-B796-FE3BBB5B7AC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0803F3F6-8AA1-41C7-B796-FE3BBB5B7AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0803F3F6-8AA1-41C7-B796-FE3BBB5B7AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0803F3F6-8AA1-41C7-B796-FE3BBB5B7AC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D932BF71-7065-4E15-9796-CA6F28DF146C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D932BF71-7065-4E15-9796-CA6F28DF146C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D932BF71-7065-4E15-9796-CA6F28DF146C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D932BF71-7065-4E15-9796-CA6F28DF146C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4370D6D8-4EDB-4681-B6AB-D35ED646463A}
+		SolutionGuid = {9A3C73B3-FAB1-496F-AD23-5BCB6BA729D9}
 	EndGlobalSection
 EndGlobal
