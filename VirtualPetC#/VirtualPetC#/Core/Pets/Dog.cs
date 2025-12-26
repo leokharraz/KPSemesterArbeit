@@ -38,13 +38,12 @@ public class Dog : Pet
     /// </summary>
     public override void Play()
     {
-        Update();
         Console.WriteLine($"{Name} is playing fetch! 🎾");
         Console.WriteLine($"{Name} brings the ball back with tail wagging!");
 
         // Dogs get MORE happiness from playing due to their playful nature
         Happiness += 25;  // Base Pet gives 20, dogs get 25
-        Hunger += 10;
+        Hunger -= 10;  // Playing makes pet hungry
 
         Console.WriteLine($"{Name} is very happy but getting hungry from all that running!");
     }
@@ -55,7 +54,6 @@ public class Dog : Pet
     /// </summary>
     public void UseLoyaltyBoost()
     {
-        Update();
         Console.WriteLine($"{Name} shows unconditional loyalty and devotion!");
         Console.WriteLine("Your loyal companion's spirits are lifted!");
         Happiness += 15;

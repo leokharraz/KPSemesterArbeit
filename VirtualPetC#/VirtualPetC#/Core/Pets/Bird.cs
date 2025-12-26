@@ -45,13 +45,12 @@ public class Bird : Pet
     /// </summary>
     public override void Play()
     {
-        Update();
         Console.WriteLine($"{Name} is flying around the room! 🦅");
         Console.WriteLine($"{Name} does aerial acrobatics and loops in the air!");
 
         // Birds get balanced stats from flying - between dog and cat
         Happiness += 22;  // Between dog (25) and cat (18)
-        Hunger += 8;      // Between dog (10) and cat (7)
+        Hunger -= 8;      // Between dog (10) and cat (7)
 
         Console.WriteLine($"{Name} lands gracefully, chirping with joy!");
     }
@@ -62,8 +61,6 @@ public class Bird : Pet
     /// </summary>
     public void SingSong()
     {
-        Update();
-
         // Check if bird sang recently (cooldown of 2 minutes)
         TimeSpan timeSinceLastSong = DateTime.Now - lastSongTime;
         if (timeSinceLastSong.TotalMinutes < 2 && songsPerformed > 0)
@@ -80,7 +77,7 @@ public class Bird : Pet
         // Song boosts all stats moderately
         Health += 15;
         Happiness += 20;
-        Hunger -= 10;  // Song is calming, reduces perceived hunger
+        Hunger += 10;  // Song is calming, reduces hunger perception
 
         songsPerformed++;
         lastSongTime = DateTime.Now;

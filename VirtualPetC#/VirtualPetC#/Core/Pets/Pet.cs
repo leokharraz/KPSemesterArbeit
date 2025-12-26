@@ -44,7 +44,7 @@ public abstract class Pet
     protected Pet(string name)
     {
         Name = name;
-        hunger = 50;
+        hunger = 100;  // Start full (100 = full, 0 = starving)
         happiness = 100;
         health = 100;
         birthTime = DateTime.Now;
@@ -70,26 +70,23 @@ public abstract class Pet
     /// </summary>
     public virtual void Play()
     {
-        Update();
         Happiness += 20;
-        Hunger += 10;
+        Hunger -= 10;  // Playing makes pet hungry
         Console.WriteLine($"{Name} is playing! Happiness increased, but got a bit hungry.");
     }
 
     // Concrete methods - shared by all pets
     public void Feed()
     {
-        Update();
-        Hunger -= 30;
+        Hunger += 30;  // Feeding restores hunger
         Happiness += 5;
-        Console.WriteLine($"{Name} enjoyed the meal! Hunger decreased.");
+        Console.WriteLine($"{Name} enjoyed the meal! Hunger restored.");
     }
 
     public void Sleep()
     {
-        Update();
         Health += 20;
-        Hunger += 5;
+        Hunger -= 5;  // Sleeping uses a bit of energy
         Console.WriteLine($"{Name} took a nice nap. Health restored!");
     }
 
@@ -107,7 +104,8 @@ public abstract class Pet
             // Apply stat decay based on age stage
             double decayMultiplier = GetDecayMultiplier();
 
-            Hunger += (int)(minutesElapsed * 5 * decayMultiplier);
+            // All stats decrease over time
+            Hunger -= (int)(minutesElapsed * 5 * decayMultiplier);
             Happiness -= (int)(minutesElapsed * 3 * decayMultiplier);
 
             // Update health based on other stats
@@ -127,7 +125,7 @@ public abstract class Pet
         Console.WriteLine($"Type: {GetType().Name}");
         Console.WriteLine($"Age: {Age} minutes ({AgeStage})");
         Console.WriteLine($"Health: {Health}/100 {GetHealthBar(Health)}");
-        Console.WriteLine($"Hunger: {Hunger}/100 {GetHealthBar(100 - Hunger)}");
+        Console.WriteLine($"Hunger: {Hunger}/100 {GetHealthBar(Hunger)}");
         Console.WriteLine($"Happiness: {Happiness}/100 {GetHealthBar(Happiness)}");
         Console.WriteLine($"Special Ability: {GetSpecialAbility()}");
         Console.WriteLine($"Status: {(IsAlive ? "Alive and well!" : "Critical condition!")}");
@@ -147,7 +145,7 @@ public abstract class Pet
     {
         return AgeStage switch
         {
-            AgeStage.Baby => 1.3,      // Babies get hungry faster
+            AgeStage.Baby => 1.3,      // Babies need food more often
             AgeStage.Adult => 1.0,     // Adults normal rate
             AgeStage.Elderly => 0.7,   // Elderly slower decay
             _ => 1.0
@@ -156,13 +154,13 @@ public abstract class Pet
 
     private void UpdateHealth()
     {
-        // Poor conditions reduce health
-        if (hunger > 80 || happiness < 20)
+        // Poor conditions reduce health (low hunger or low happiness)
+        if (hunger < 20 || happiness < 20)
         {
             Health -= 2;
         }
-        // Good conditions slowly restore health
-        else if (hunger < 30 && happiness > 70)
+        // Good conditions slowly restore health (well-fed and happy)
+        else if (hunger > 70 && happiness > 70)
         {
             Health += 1;
         }

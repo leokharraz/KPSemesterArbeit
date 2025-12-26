@@ -43,13 +43,12 @@ public class Cat : Pet
     /// </summary>
     public override void Play()
     {
-        Update();
         Console.WriteLine($"{Name} is playing independently with a toy mouse! 🐭");
         Console.WriteLine($"{Name} pounces and swats at the toy gracefully!");
 
-        // Cats are more independent - moderate happiness gain, less hunger
+        // Cats are more independent - moderate happiness gain, less hunger loss
         Happiness += 18;  // Slightly less than base Pet (20)
-        Hunger += 7;      // Less hunger than dogs (10) - cats conserve energy
+        Hunger -= 7;      // Less hunger loss than dogs (10) - cats conserve energy
 
         Console.WriteLine($"{Name} seems content with the solo playtime.");
     }
@@ -60,8 +59,6 @@ public class Cat : Pet
     /// </summary>
     public void UseNineLives()
     {
-        Update();
-
         if (livesRemaining <= 0)
         {
             Console.WriteLine($"{Name} has no lives remaining to use!");
