@@ -1,4 +1,4 @@
-namespace VirtualPetC_.Models;
+namespace VirtualPetC_.Enums;
 
 /// <summary>
 /// Represents the different life stages of a pet
