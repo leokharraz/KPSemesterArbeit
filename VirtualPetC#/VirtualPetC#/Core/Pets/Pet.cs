@@ -12,8 +12,14 @@ public abstract class Pet
     private int hunger;
     private int happiness;
     private int health;
+    private int cleanliness;
     private readonly DateTime birthTime;
     private DateTime lastUpdateTime;
+
+    // Accumulated fractional decay (to prevent loss from integer truncation)
+    private double accumulatedHungerDecay;
+    private double accumulatedHappinessDecay;
+    private double accumulatedCleanlinessDecay;
 
     // ENCAPSULATION: Public properties with controlled access
     public string Name { get; }
@@ -36,6 +42,12 @@ public abstract class Pet
         protected set => health = Math.Clamp(value, 0, 100);
     }
 
+    public int Cleanliness
+    {
+        get => cleanliness;
+        protected set => cleanliness = Math.Clamp(value, 0, 100);
+    }
+
     public int Age => (int)(DateTime.Now - birthTime).TotalMinutes;
     public AgeStage AgeStage => GetAgeStage();
     public bool IsAlive => health > 0;
@@ -47,6 +59,7 @@ public abstract class Pet
         hunger = 100;  // Start full (100 = full, 0 = starving)
         happiness = 100;
         health = 100;
+        cleanliness = 100;  // Start clean (100 = clean, 0 = dirty)
         birthTime = DateTime.Now;
         lastUpdateTime = DateTime.Now;
     }
@@ -90,6 +103,13 @@ public abstract class Pet
         Console.WriteLine($"{Name} took a nice nap. Health restored!");
     }
 
+    public void Clean()
+    {
+        Cleanliness += 40;
+        Happiness += 10;
+        Console.WriteLine($"{Name} is now clean and fresh! Feels much better!");
+    }
+
     /// <summary>
     /// Updates pet stats based on time elapsed since last update.
     /// Demonstrates time-based decay system.
@@ -97,16 +117,47 @@ public abstract class Pet
     public void Update()
     {
         TimeSpan elapsed = DateTime.Now - lastUpdateTime;
-        double minutesElapsed = elapsed.TotalMinutes;
+        double secondsElapsed = elapsed.TotalSeconds;
 
-        if (minutesElapsed > 0)
+        if (secondsElapsed > 0)
         {
             // Apply stat decay based on age stage
             double decayMultiplier = GetDecayMultiplier();
 
-            // All stats decrease over time
-            Hunger -= (int)(minutesElapsed * 5 * decayMultiplier);
-            Happiness -= (int)(minutesElapsed * 3 * decayMultiplier);
+            // Accumulate hunger decay (prevents loss from truncation)
+            // Rate: 2 points per second
+            accumulatedHungerDecay += secondsElapsed * 2.0 * decayMultiplier;
+            if (accumulatedHungerDecay >= 1.0)
+            {
+                int hungerLoss = (int)accumulatedHungerDecay;
+                Hunger -= hungerLoss;
+                accumulatedHungerDecay -= hungerLoss; // Keep the fractional part
+            }
+
+            // Accumulate cleanliness decay
+            // Rate: 1 point per second (gets dirty slower than hunger)
+            accumulatedCleanlinessDecay += secondsElapsed * 1.0 * decayMultiplier;
+            if (accumulatedCleanlinessDecay >= 1.0)
+            {
+                int cleanlinessLoss = (int)accumulatedCleanlinessDecay;
+                Cleanliness -= cleanlinessLoss;
+                accumulatedCleanlinessDecay -= cleanlinessLoss;
+            }
+
+            // Accumulate happiness decay
+            // Rate: 2 points per second, but ONLY if cleanliness OR hunger is low
+            if (cleanliness < 60 || hunger < 60)
+            {
+                accumulatedHappinessDecay += secondsElapsed * 2.0 * decayMultiplier;
+            }
+
+            // Apply accumulated happiness decay
+            if (accumulatedHappinessDecay >= 1.0)
+            {
+                int happinessLoss = (int)accumulatedHappinessDecay;
+                Happiness -= happinessLoss;
+                accumulatedHappinessDecay -= happinessLoss; // Keep the fractional part
+            }
 
             // Update health based on other stats
             UpdateHealth();
@@ -127,6 +178,7 @@ public abstract class Pet
         Console.WriteLine($"Health: {Health}/100 {GetHealthBar(Health)}");
         Console.WriteLine($"Hunger: {Hunger}/100 {GetHealthBar(Hunger)}");
         Console.WriteLine($"Happiness: {Happiness}/100 {GetHealthBar(Happiness)}");
+        Console.WriteLine($"Cleanliness: {Cleanliness}/100 {GetHealthBar(Cleanliness)}");
         Console.WriteLine($"Special Ability: {GetSpecialAbility()}");
         Console.WriteLine($"Status: {(IsAlive ? "Alive and well!" : "Critical condition!")}");
         Console.WriteLine("===================\n");
@@ -154,13 +206,13 @@ public abstract class Pet
 
     private void UpdateHealth()
     {
-        // Poor conditions reduce health (low hunger or low happiness)
-        if (hunger < 20 || happiness < 20)
+        // Poor conditions reduce health (low hunger, happiness, or cleanliness)
+        if (hunger < 20 || happiness < 20 || cleanliness < 20)
         {
             Health -= 2;
         }
-        // Good conditions slowly restore health (well-fed and happy)
-        else if (hunger > 70 && happiness > 70)
+        // Good conditions slowly restore health (well-fed, happy, and clean)
+        else if (hunger > 70 && happiness > 70 && cleanliness > 70)
         {
             Health += 1;
         }

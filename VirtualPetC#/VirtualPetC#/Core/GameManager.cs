@@ -74,6 +74,7 @@ public class GameManager
     private void RunGameLoop()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         if (currentPet == null) return;
 
         isGameRunning = true;
@@ -91,7 +92,7 @@ public class GameManager
 
             // Display menu and get user choice
             ui.DisplayActionMenu(currentPet);
-            int choice = ui.GetValidChoice(1, 7);
+            int choice = ui.GetValidChoice(1, 8);
 
             // Execute action based on choice
             ExecuteAction(choice);
@@ -140,21 +141,25 @@ public class GameManager
                 currentPet.Sleep();
                 break;
 
-            case 4: // Interact (Make Sound)
+            case 4: // Clean
+                currentPet.Clean();
+                break;
+
+            case 5: // Interact (Make Sound)
                 // POLYMORPHISM: MakeSound() is different for each pet type
                 currentPet.MakeSound();
                 break;
 
-            case 5: // Use Special Ability
+            case 6: // Use Special Ability
                 // POLYMORPHISM: Different special abilities for each pet type
                 ui.UseSpecialAbility(currentPet);
                 break;
 
-            case 6: // View Status
+            case 7: // View Status
                 Console.WriteLine("(Status already displayed above)");
                 break;
 
-            case 7: // Exit
+            case 8: // Exit
                 Console.WriteLine("\nAre you sure you want to exit? (y/n)");
                 string? confirm = Console.ReadLine();
                 if (confirm?.ToLower() == "y")

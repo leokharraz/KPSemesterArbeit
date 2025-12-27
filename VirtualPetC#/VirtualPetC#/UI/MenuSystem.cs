@@ -82,10 +82,11 @@ public class MenuSystem : IUserInterface
         Console.WriteLine("1. Feed");
         Console.WriteLine("2. Play");
         Console.WriteLine("3. Sleep");
-        Console.WriteLine("4. Interact (Make Sound)");
-        Console.WriteLine("5. Use Special Ability");
-        Console.WriteLine("6. View Status");
-        Console.WriteLine("7. Exit Game");
+        Console.WriteLine("4. Clean");
+        Console.WriteLine("5. Interact (Make Sound)");
+        Console.WriteLine("6. Use Special Ability");
+        Console.WriteLine("7. View Status");
+        Console.WriteLine("8. Exit Game");
     }
 
     /// <summary>
@@ -172,6 +173,14 @@ public class MenuSystem : IUserInterface
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"\n⚠️  {pet.Name}'s health is low!");
+                Console.ResetColor();
+                hasWarning = true;
+            }
+
+            if (pet.Cleanliness < 30)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"\n⚠️  {pet.Name} is getting dirty!");
                 Console.ResetColor();
                 hasWarning = true;
             }
