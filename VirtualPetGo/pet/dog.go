@@ -11,10 +11,9 @@ type Dog struct {
 
 func NewDog(name, breed string) *Dog {
 	return &Dog{
-		BasePet:        newBasePet(name),
-		breed:          "",
-		loyaltyActive:  false,
-		loyaltyEndTime: 0,
+		BasePet:       newBasePet(name),
+		breed:         breed,
+		loyaltyActive: false,
 	}
 }
 

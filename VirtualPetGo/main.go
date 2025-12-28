@@ -2,6 +2,7 @@ package main
 
 import (
 	"VirtualPetGo/pet"
+	"VirtualPetGo/utils"
 	"fmt"
 )
 
@@ -13,4 +14,5 @@ func main() {
 
 	fmt.Printf(dog.Play() + "\n")
 	fmt.Printf("" + dog.GetName() + "\n")
+	utils.ReadIntInRange(1, 9)
 }
