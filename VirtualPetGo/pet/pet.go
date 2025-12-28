@@ -21,11 +21,11 @@ type Pet interface {
 	Update(deltaTime float64)
 	IsAlive() bool
 	GetAge() float64
+	UseSpecialAbility() string
+	CanUseAbility() bool // Check if ability is available
 }
 
 type SpecialAbility interface {
-	UseSpecialAbility() string
-	CanUseAbility() bool // Check if ability is available
 }
 
 type Status struct {
