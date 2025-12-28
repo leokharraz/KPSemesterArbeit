@@ -10,6 +10,7 @@ type BasePet struct {
 	happiness      int
 	cleanliness    int
 	lastUpdateTime time.Time
+	sound          string
 }
 
 func newBasePet(name string) BasePet {
@@ -107,21 +108,26 @@ func (bp *BasePet) Clean() string {
 func (bp *BasePet) IsAlive() bool {
 	return bp.health > 0
 }
+func (bp *BasePet) getHappinessDecayModifier() float64 {
+	//used to change HappinessDecay in Update subclasses
+	return 1.0 // Default: no modification
+}
+
 func (bp *BasePet) Update(deltaTime float64) {
-	// Get age-based decay multiplier
 	multiplier := bp.getDecayMultiplier()
 
-	//Apply hunger decay
+	// Apply hunger decay
 	hungerDecay := HungerDecayRate * deltaTime * multiplier
 	bp.setHunger(bp.GetHunger() - int(hungerDecay))
 
-	//Apply Cleanliness decay
+	// Apply cleanliness decay
 	cleanlinessDecay := CleanlinessDecayRate * deltaTime * multiplier
 	bp.setCleanliness(bp.GetCleanliness() - int(cleanlinessDecay))
 
-	//Apply happiness decay
+	// Apply happiness decay with modifier hook
 	if bp.GetHunger() < CriticalStatThreshold || bp.GetCleanliness() < CriticalStatThreshold {
 		happinessDecay := HappinessDecayRate * deltaTime * multiplier
+		happinessDecay *= bp.getHappinessDecayModifier() // Hook for subclasses
 		bp.setHappiness(bp.GetHappiness() - int(happinessDecay))
 	}
 
@@ -129,9 +135,10 @@ func (bp *BasePet) Update(deltaTime float64) {
 		healthDecay := HealthDecayRate * deltaTime * multiplier
 		bp.setHealth(bp.GetHealth() - int(healthDecay))
 	}
-	bp.lastUpdateTime = time.Now()
 
+	bp.lastUpdateTime = time.Now()
 }
+
 func (bp *BasePet) getStatusMessage() string {
 	if !bp.IsAlive() {
 		return "Dead..."
@@ -147,6 +154,9 @@ func (bp *BasePet) getStatusMessage() string {
 	} else {
 		return "Alive and well!"
 	}
+}
+func Interact() {
+
 }
 
 // Helper Function to reduce redundancy
