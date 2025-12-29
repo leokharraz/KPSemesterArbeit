@@ -25,7 +25,7 @@ func NewGameManager(userInterface ui.IUserInterface) *GameManager {
 func (gm *GameManager) CreatePet(petType int, name string, variant string) {
 	switch petType {
 	case 1:
-		gm.currentPet = pet.NewDog(name, variant)
+		gm.currentPet = pet.NewBird(name, variant)
 
 	}
 	gm.lastUpdateTime = time.Now()
@@ -66,7 +66,7 @@ func (gm *GameManager) createPet() {
 	breed, _ := utils.ReadString()
 
 	// Create dog (MVP - only Dog for now)
-	gm.currentPet = pet.NewDog(name, breed)
+	gm.currentPet = pet.NewBird(name, breed)
 	gm.lastUpdateTime = time.Now()
 
 	fmt.Printf("\n%s the %s has been born!\n", name, breed)
@@ -97,9 +97,7 @@ func (gm *GameManager) gameLoop() {
 			break
 		}
 
-		fmt.Print("\nPress Enter to continue...")
 		utils.WaitForEnter()
-		//bufio.Reader.ReadString('\n')
 	}
 }
 

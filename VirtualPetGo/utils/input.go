@@ -4,21 +4,27 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"unicode"
 )
 
 func ReadInt() (int, error) {
-	var value int
-	for {
-		_, err := fmt.Scan(&value)
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for scanner.Scan() {
+		input := strings.TrimSpace(scanner.Text())
+
+		value, err := strconv.Atoi(input)
 		if err != nil {
-			fmt.Scanln() // Clear buffer
 			fmt.Print("Invalid input. Please enter a number: ")
 			continue
 		}
+
 		return value, nil
 	}
+
+	return 0, scanner.Err()
 }
 
 // ReadString reads a string containing only letters from standard input
@@ -44,7 +50,9 @@ func ReadString() (string, error) {
 	return "", scanner.Err()
 }
 func WaitForEnter() {
-	bufio.NewScanner(os.Stdin)
+	fmt.Println("Press enter to continue...")
+	var dummy string
+	fmt.Scanln(&dummy)
 }
 
 // ReadIntInRange reads an integer within a specific range
