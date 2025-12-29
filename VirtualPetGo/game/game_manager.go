@@ -58,18 +58,41 @@ func (gm *GameManager) Start() {
 }
 
 // createPet handles pet creation phase
+// createPet handles pet creation phase
 func (gm *GameManager) createPet() {
+	// Display pet selection menu
+	gm.ui.DisplayPetSelection()
+
+	// Get pet type choice
+	petType, _ := utils.ReadIntInRange(1, 3)
+
+	// Get pet name
 	fmt.Print("\nEnter your pet's name: ")
 	name, _ := utils.ReadString()
 
-	fmt.Print("Enter your dog's breed: ")
-	breed, _ := utils.ReadString()
+	// Get variant based on pet type
+	var variant string
+	switch petType {
+	case 1: // Dog
+		fmt.Print("Enter your dog's breed: ")
+		variant, _ = utils.ReadString()
+		gm.currentPet = pet.NewDog(name, variant)
+		fmt.Printf("\n%s the %s has been born!\n", name, variant)
 
-	// Create dog (MVP - only Dog for now)
-	gm.currentPet = pet.NewBird(name, breed)
+	case 2: // Cat
+		fmt.Print("Enter your cat's fur color: ")
+		variant, _ = utils.ReadString()
+		gm.currentPet = pet.NewCat(name, variant)
+		fmt.Printf("\n%s the %s cat has been born!\n", name, variant)
+
+	case 3: // Bird
+		fmt.Print("Enter your bird's species: ")
+		variant, _ = utils.ReadString()
+		gm.currentPet = pet.NewBird(name, variant)
+		fmt.Printf("\n%s the %s has been born!\n", name, variant)
+	}
+
 	gm.lastUpdateTime = time.Now()
-
-	fmt.Printf("\n%s the %s has been born!\n", name, breed)
 }
 
 // gameLoop is the main game loop

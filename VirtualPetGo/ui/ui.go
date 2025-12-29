@@ -14,6 +14,7 @@ type IUserInterface interface {
 	DisplayStatus(pet.Pet)
 	DisplayMessage(string)
 	ClearScreen()
+	DisplayPetSelection()
 }
 type ConsoleUI struct{}
 
@@ -95,6 +96,17 @@ func makeProgressBar(value int) string {
 }
 func (cui *ConsoleUI) DisplayMessage(message string) {
 	fmt.Println(message)
+}
+
+// DisplayPetSelection shows the pet type selection menu
+func (cui *ConsoleUI) DisplayPetSelection() {
+	fmt.Println("\n╔════════════════════════════════════════════╗")
+	fmt.Println("║          CHOOSE YOUR PET TYPE              ║")
+	fmt.Println("╚════════════════════════════════════════════╝")
+	fmt.Println("1. Dog   - Loyal companion with happiness boost")
+	fmt.Println("2. Cat   - Independent pet with 9 lives")
+	fmt.Println("3. Bird  - Cheerful singer with stat boosts")
+	fmt.Print("\nSelect pet type (1-3): ")
 }
 
 func (cui *ConsoleUI) ClearScreen() {
