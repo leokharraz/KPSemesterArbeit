@@ -37,9 +37,9 @@ public class MenuSystem : IUserInterface
         Console.WriteLine("║          CHOOSE YOUR PET TYPE              ║");
         Console.WriteLine("╚════════════════════════════════════════════╝\n");
 
-        Console.WriteLine("1. Dog   🐕 - Loyal companion with extra happiness from play");
-        Console.WriteLine("2. Cat   🐱 - Independent pet with health regeneration (9 lives)");
-        Console.WriteLine("3. Bird  🐦 - Melodious friend that can sing to boost all stats");
+        Console.WriteLine("1. Dog  - Loyal companion with extra happiness from play");
+        Console.WriteLine("2. Cat  - Independent pet with health regeneration (9 lives)");
+        Console.WriteLine("3. Bird - Melodious friend that can sing to boost all stats");
 
         int choice = GetValidChoice(1, 3, "\nEnter your choice (1-3): ");
 

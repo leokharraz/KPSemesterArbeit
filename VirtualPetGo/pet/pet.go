@@ -71,7 +71,7 @@ const (
 // Stat decay rates (points per second, before age multiplier)
 const (
 	HungerDecayRate      = 2.0
-	CleanlinessDecayRate = 1.0
+	CleanlinessDecayRate = 1.5
 	HappinessDecayRate   = 1.0 // Only when hunger or cleanliness < 30
 	HealthDecayRate      = 0.5 // When multiple stats are critically low
 )
@@ -80,25 +80,6 @@ const (
 const (
 	CriticalStatThreshold = 30 // Below this, happiness starts decaying
 	LowStatThreshold      = 20 // Below this, health may be affected
-)
-
-// Action effects
-const (
-	// Feed
-	FeedHungerIncrease    = 30
-	FeedHappinessIncrease = 5
-
-	// Play
-	PlayHungerDecrease    = 10
-	PlayHappinessIncrease = 15 // Base amount, can be overridden by pet type
-
-	// Sleep
-	SleepHealthIncrease = 20
-	SleepHungerDecrease = 5
-
-	// Clean
-	CleanCleanlinessIncrease = 40
-	CleanHappinessIncrease   = 10
 )
 
 // Special ability parameters
