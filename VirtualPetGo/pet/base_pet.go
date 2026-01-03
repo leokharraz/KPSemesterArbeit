@@ -1,6 +1,9 @@
 package pet
 
-import "time"
+import (
+	"math/rand"
+	"time"
+)
 
 type BasePet struct {
 	name           string
@@ -11,6 +14,8 @@ type BasePet struct {
 	cleanliness    int
 	lastUpdateTime time.Time
 	sound          string
+	isIll          bool
+	illnessName    string
 }
 
 func newBasePet(name string) BasePet {
@@ -23,6 +28,8 @@ func newBasePet(name string) BasePet {
 		happiness:      100,
 		cleanliness:    100,
 		lastUpdateTime: now,
+		isIll:          false,
+		illnessName:    "",
 	}
 }
 func (bp *BasePet) GetName() string {
@@ -103,7 +110,16 @@ func (bp *BasePet) Play() string {
 func (bp *BasePet) Clean() string {
 	bp.setCleanliness(bp.GetCleanliness() + 40)
 	bp.setHappiness(bp.GetHappiness() + 10)
-	return bp.GetName() + " is now clean and fresh! Feels much better."
+
+	message := bp.GetName() + " is now clean and fresh! Feels much better."
+
+	// Cure illness if pet gets clean
+	if bp.isIll && bp.cleanliness > 60 {
+		bp.recoverFromIllness()
+		message += " The illness has been cured!"
+	}
+
+	return message
 }
 func (bp *BasePet) IsAlive() bool {
 	return bp.health > 0
@@ -115,6 +131,9 @@ func (bp *BasePet) getHappinessDecayModifier() float64 {
 
 func (bp *BasePet) Update(deltaTime float64) {
 	multiplier := bp.getDecayMultiplier()
+
+	// Check for illness periodically
+	bp.checkForIllness()
 
 	// Apply hunger decay
 	hungerDecay := HungerDecayRate * deltaTime * multiplier
@@ -131,7 +150,11 @@ func (bp *BasePet) Update(deltaTime float64) {
 		bp.setHappiness(bp.GetHappiness() - int(happinessDecay))
 	}
 
-	if bp.getCriticalStatCount() >= 2 {
+	// If ill, health decays faster
+	if bp.isIll {
+		illnessHealthDecay := 1.0 * deltaTime * multiplier // 1 health per second when ill
+		bp.setHealth(bp.GetHealth() - int(illnessHealthDecay))
+	} else if bp.getCriticalStatCount() >= 2 {
 		healthDecay := HealthDecayRate * deltaTime * multiplier
 		bp.setHealth(bp.GetHealth() - int(healthDecay))
 	}
@@ -180,4 +203,33 @@ func (bp *BasePet) getCriticalStatCount() int {
 		lowStatCount++
 	}
 	return lowStatCount
+}
+func (bp *BasePet) checkForIllness() {
+	// Don't get sick if already ill
+	if bp.isIll {
+		return
+	}
+
+	// Calculate illness chance based on cleanliness
+	// Lower cleanliness = higher chance
+	cleanlinessRatio := float64(bp.cleanliness) / 100.0
+	illnessChance := BaseIllnessChance + (MaxIllnessChance-BaseIllnessChance)*(1.0-cleanlinessRatio)
+
+	// Random check
+	if rand.Float64() < illnessChance {
+		bp.isIll = true
+		bp.illnessName = IllnessTypes[rand.Intn(len(IllnessTypes))]
+	}
+}
+func (bp *BasePet) IsIll() bool {
+	return bp.isIll
+}
+
+func (bp *BasePet) GetIllness() string {
+	return bp.illnessName
+}
+
+func (bp *BasePet) recoverFromIllness() {
+	bp.isIll = false
+	bp.illnessName = ""
 }

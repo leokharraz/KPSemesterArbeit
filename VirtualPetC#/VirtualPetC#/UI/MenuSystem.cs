@@ -119,21 +119,18 @@ public class MenuSystem : IUserInterface
         Console.WriteLine($"\n--- Using {pet.Name}'s Special Ability ---");
 
         // POLYMORPHISM: Different behavior based on runtime type
-        switch (pet)
+        string result = pet switch
         {
-            case Dog dog:
-                dog.UseLoyaltyBoost();
-                break;
-            case Cat cat:
-                cat.UseNineLives();
-                break;
-            case Bird bird:
-                bird.SingSong();
-                break;
-            default:
-                Console.WriteLine("This pet doesn't have a special ability yet!");
-                break;
-        }
+            Dog dog when dog.CanUseAbility() => dog.UseSpecialAbility(),
+            Dog dog => $"{dog.Name}'s loyalty is already active!",
+            Cat cat when cat.CanUseAbility() => cat.UseSpecialAbility(),
+            Cat cat => $"{cat.Name} has no lives remaining!",
+            Bird bird when bird.CanUseAbility() => bird.UseSpecialAbility(),
+            Bird bird => $"{bird.Name} needs to rest their voice! (Cooldown: {(int)bird.SongCooldownRemaining}s)",
+            _ => "This pet doesn't have a special ability yet!"
+        };
+
+        Console.WriteLine(result);
     }
 
     /// <summary>
@@ -143,6 +140,15 @@ public class MenuSystem : IUserInterface
     public void DisplayWarnings(Pet pet)
     {
         bool hasWarning = false;
+
+        // Check for illness first (highest priority)
+        if (pet.IsIll)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n⚕️ WARNING: Your pet is ILL! Clean them immediately to cure! ⚕️");
+            Console.ResetColor();
+            hasWarning = true;
+        }
 
         if (!pet.IsAlive)
         {
@@ -237,5 +243,14 @@ public class MenuSystem : IUserInterface
         }
 
         Console.WriteLine("\nThank you for playing Virtual Pet Simulator!");
+    }
+
+    /// <summary>
+    /// Displays a message to the user.
+    /// </summary>
+    /// <param name="message">Message to display</param>
+    public void DisplayMessage(string message)
+    {
+        Console.WriteLine(message);
     }
 }

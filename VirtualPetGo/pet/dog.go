@@ -85,5 +85,8 @@ func (d *Dog) GetStatus() Status {
 		// Overall status
 		StatusMessage: d.BasePet.getStatusMessage(),
 		IsAlive:       d.IsAlive(),
+		// Illness status
+		IsIll:       d.IsIll(),
+		IllnessName: d.GetIllness(),
 	}
 }

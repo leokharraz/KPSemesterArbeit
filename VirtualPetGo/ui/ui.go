@@ -15,6 +15,7 @@ type IUserInterface interface {
 	DisplayMessage(string)
 	ClearScreen()
 	DisplayPetSelection()
+	DisplayWarnings(pet.Pet)
 }
 type ConsoleUI struct{}
 
@@ -58,6 +59,11 @@ func (cui *ConsoleUI) DisplayStatus(p pet.Pet) {
 	fmt.Printf("Hunger:      %d/100 [%s]\n", status.Hunger, makeProgressBar(status.Hunger))
 	fmt.Printf("Happiness:   %d/100 [%s]\n", status.Happiness, makeProgressBar(status.Happiness))
 	fmt.Printf("Cleanliness: %d/100 [%s]\n", status.Cleanliness, makeProgressBar(status.Cleanliness))
+
+	// Illness status
+	if status.IsIll {
+		fmt.Printf("\n🤒 ILLNESS: %s is sick with %s!\n", status.Name, status.IllnessName)
+	}
 
 	// Special ability
 	fmt.Printf("\nSpecial Ability: %s %s\n", status.SpecialAbility, status.AbilityStatus)
@@ -114,4 +120,43 @@ func (cui *ConsoleUI) ClearScreen() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 
+}
+
+// DisplayWarnings shows warnings when pet stats are critically low
+func (cui *ConsoleUI) DisplayWarnings(p pet.Pet) {
+	if p == nil {
+		return
+	}
+
+	status := p.GetStatus()
+	hasWarning := false
+
+	if !status.IsAlive {
+		fmt.Println("\n⚠️  WARNING: Your pet's health is critical! ⚠️")
+		hasWarning = true
+	} else {
+		if status.Hunger < 30 {
+			fmt.Printf("\n⚠️  %s is very hungry!\n", status.Name)
+			hasWarning = true
+		}
+
+		if status.Happiness < 30 {
+			fmt.Printf("\n⚠️  %s is feeling sad!\n", status.Name)
+			hasWarning = true
+		}
+
+		if status.Health < 30 {
+			fmt.Printf("\n⚠️  %s's health is low!\n", status.Name)
+			hasWarning = true
+		}
+
+		if status.Cleanliness < 30 {
+			fmt.Printf("\n⚠️  %s is getting dirty!\n", status.Name)
+			hasWarning = true
+		}
+	}
+
+	if hasWarning {
+		fmt.Println()
+	}
 }

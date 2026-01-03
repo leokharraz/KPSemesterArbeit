@@ -108,6 +108,8 @@ func (gm *GameManager) gameLoop() {
 			break
 		}
 		gm.ui.DisplayStatus(gm.currentPet)
+		// Display warnings if any stats are critical
+		gm.ui.DisplayWarnings(gm.currentPet)
 		// Display menu
 		gm.ui.DisplayMainMenu()
 

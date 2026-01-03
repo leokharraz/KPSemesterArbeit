@@ -14,6 +14,7 @@ public class GameManager
     private Pet? currentPet;
     private readonly IUserInterface ui;
     private bool isGameRunning;
+    private DateTime lastUpdateTime;
 
     /// <summary>
     /// Constructor demonstrates DEPENDENCY INJECTION.
@@ -25,6 +26,7 @@ public class GameManager
     {
         ui = userInterface;
         isGameRunning = false;
+        lastUpdateTime = DateTime.Now;
     }
 
     /// <summary>
@@ -65,7 +67,22 @@ public class GameManager
         // POLYMORPHISM: MakeSound() behavior depends on runtime type
         currentPet.MakeSound();
 
+        lastUpdateTime = DateTime.Now;
         ui.PauseForUser();
+    }
+
+    /// <summary>
+    /// Updates the pet's stats based on time elapsed since last update.
+    /// </summary>
+    private void UpdatePet()
+    {
+        if (currentPet == null) return;
+
+        DateTime now = DateTime.Now;
+        double deltaTime = (now - lastUpdateTime).TotalSeconds;
+
+        currentPet.Update(deltaTime);
+        lastUpdateTime = now;
     }
 
     /// <summary>
@@ -85,7 +102,10 @@ public class GameManager
             Console.WriteLine("\x1b[3J");
             Console.SetCursorPosition(0, 0);
 
-            // Show status and warnings (DisplayStatus() will call Update())
+            // Update pet stats based on elapsed time
+            UpdatePet();
+
+            // Show status and warnings
             currentPet.DisplayStatus();
             ui.DisplayWarnings(currentPet);
             ui.DisplaySeparator();
@@ -129,20 +149,24 @@ public class GameManager
         switch (choice)
         {
             case 1: // Feed
-                currentPet.Feed();
+                string feedResult = currentPet.Feed();
+                ui.DisplayMessage(feedResult);
                 break;
 
             case 2: // Play
                 // POLYMORPHISM: Play() behavior differs for Dog, Cat, Bird
-                currentPet.Play();
+                string playResult = currentPet.Play();
+                ui.DisplayMessage(playResult);
                 break;
 
             case 3: // Sleep
-                currentPet.Sleep();
+                string sleepResult = currentPet.Sleep();
+                ui.DisplayMessage(sleepResult);
                 break;
 
             case 4: // Clean
-                currentPet.Clean();
+                string cleanResult = currentPet.Clean();
+                ui.DisplayMessage(cleanResult);
                 break;
 
             case 5: // Interact (Make Sound)

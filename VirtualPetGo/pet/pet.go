@@ -23,6 +23,8 @@ type Pet interface {
 	GetAge() float64
 	UseSpecialAbility() string
 	CanUseAbility() bool // Check if ability is available
+	IsIll() bool
+	GetIllness() string
 }
 
 type SpecialAbility interface {
@@ -47,6 +49,18 @@ type Status struct {
 	// Overall status
 	StatusMessage string // e.g., "Alive and well!", "Needs attention!", "Critical condition!"
 	IsAlive       bool
+
+	// Illness status (Add these)
+	IsIll       bool
+	IllnessName string
+}
+
+var IllnessTypes = []string{
+	"Cold",
+	"Fleas",
+	"Stomach Bug",
+	"Fever",
+	"Infection",
 }
 
 const (
@@ -97,4 +111,9 @@ const (
 	SongHappinessBoost   = 25
 	SongHealthBoost      = 15
 	SongCleanlinessBoost = 20
+)
+const (
+	IllnessCheckInterval = 5.0  // Check for illness every 5 seconds
+	BaseIllnessChance    = 0.02 // 2% base chance
+	MaxIllnessChance     = 0.20 // 20% max chance when very dirty
 )

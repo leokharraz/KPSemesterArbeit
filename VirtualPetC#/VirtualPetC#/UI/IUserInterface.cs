@@ -71,4 +71,10 @@ public interface IUserInterface
     /// </summary>
     /// <param name="pet">The pet that was being cared for</param>
     void DisplayGameOver(Pet pet);
+
+    /// <summary>
+    /// Displays a message to the user.
+    /// </summary>
+    /// <param name="message">Message to display</param>
+    void DisplayMessage(string message);
 }

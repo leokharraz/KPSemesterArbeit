@@ -66,7 +66,7 @@ func (c *Cat) GetStatus() Status {
 		Name:     c.GetName(),
 		Type:     "Cat",
 		Age:      c.GetAge(),
-		AgeStage: c.BasePet.getAgeStage(),
+		AgeStage: c.getAgeStage(),
 
 		// Core stats
 		Health:      c.GetHealth(),
@@ -81,5 +81,9 @@ func (c *Cat) GetStatus() Status {
 		// Overall status
 		StatusMessage: c.BasePet.getStatusMessage(),
 		IsAlive:       c.IsAlive(),
+
+		// Illness status
+		IsIll:       c.IsIll(),
+		IllnessName: c.GetIllness(),
 	}
 }

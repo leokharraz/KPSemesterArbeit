@@ -1,21 +1,26 @@
 namespace VirtualPetC_.Core.Pets;
 
 /// <summary>
-/// Dog class - demonstrates INHERITANCE and POLYMORPHISM.
+/// Dog class 
 /// Inherits from abstract Pet class and provides unique dog-specific behaviors.
 /// Special Ability: Loyalty - maintains happiness longer than other pets.
 /// </summary>
 public class Dog : Pet
 {
+    private bool loyaltyActive;
+    private DateTime loyaltyEndTime;
+
     // Constructor - calls base Pet constructor
     public Dog(string name) : base(name)
     {
+        loyaltyActive = false;
+        loyaltyEndTime = DateTime.MinValue;
     }
 
-    // POLYMORPHISM: Override abstract method with dog-specific implementation
-    /// <summary>
-    /// Dogs bark when making sounds.
-    /// </summary>
+    public bool IsLoyaltyActive => loyaltyActive;
+
+    
+    // Implementation of MakeSound Woof Woof
     public override void MakeSound()
     {
         Console.WriteLine($"{Name} says: Woof! Woof! 🐕");
@@ -23,41 +28,62 @@ public class Dog : Pet
         Console.WriteLine($"{Name} wags tail happily!");
     }
 
-    // POLYMORPHISM: Override abstract method
-    /// <summary>
-    /// Returns description of dog's special ability.
-    /// </summary>
+    
+    
+    // Returns description of dog's special ability.
     public override string GetSpecialAbility()
     {
-        return "Loyalty - Your faithful companion maintains happiness longer!";
+        string status = loyaltyActive ? "(Active)" : "(Ready)";
+        return $"Loyalty - Reduces happiness decay! {status}";
     }
 
-    // POLYMORPHISM: Override virtual method for unique dog behavior
-    /// <summary>
-    /// Dogs love to play fetch and get extra happiness from playing.
-    /// </summary>
-    public override void Play()
+    
+    
+    // Dogs get extra Happiness from Play
+        public override string Play()
     {
-        Console.WriteLine($"{Name} is playing fetch! 🎾");
-        Console.WriteLine($"{Name} brings the ball back with tail wagging!");
-
         // Dogs get MORE happiness from playing due to their playful nature
         Happiness += 25;  // Base Pet gives 20, dogs get 25
         Hunger -= 10;  // Playing makes pet hungry
 
-        Console.WriteLine($"{Name} is very happy but getting hungry from all that running!");
+        return $"{Name} is playing fetch! 🎾\n{Name} brings the ball back with tail wagging!\n{Name} is very happy but getting hungry from all that running!";
     }
 
-    /// <summary>
-    /// Special dog ability: Use loyalty to boost happiness.
-    /// Dogs can use their loyal nature to cheer themselves up.
-    /// </summary>
-    public void UseLoyaltyBoost()
+    
+    // Override to reduce happiness decay when loyalty is active.
+    protected override double GetHappinessDecayModifier()
     {
-        Console.WriteLine($"{Name} shows unconditional loyalty and devotion!");
-        Console.WriteLine("Your loyal companion's spirits are lifted!");
-        Happiness += 15;
-        Health += 5;
-        Console.WriteLine("Happiness and health increased through the power of loyalty!");
+        return loyaltyActive ? LoyaltyHappinessReduction : 1.0;
+    }
+
+    
+    // Special dog ability: Activate loyalty to reduce happiness decay.
+    public string UseSpecialAbility()
+    {
+        loyaltyActive = true;
+        loyaltyEndTime = DateTime.Now.AddSeconds(LoyaltyDuration);
+
+        return $"{Name} is feeling extra loyal! Happiness will decay slower for the next 60 seconds.";
+    }
+
+    
+    // Check if the dog can use its special ability.
+    public bool CanUseAbility()
+    {
+        return !loyaltyActive; // Can only use when loyalty is not currently active
+    }
+
+    
+    /// Update method to check if loyalty has expired.
+    public override void Update(double deltaTime)
+    {
+        // Call base update (which uses our modifier)
+        base.Update(deltaTime);
+
+        // Check if loyalty has expired
+        if (loyaltyActive && DateTime.Now >= loyaltyEndTime)
+        {
+            loyaltyActive = false;
+        }
     }
 }

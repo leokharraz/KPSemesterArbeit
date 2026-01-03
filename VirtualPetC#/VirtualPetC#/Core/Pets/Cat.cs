@@ -1,8 +1,7 @@
 namespace VirtualPetC_.Core.Pets;
 
 /// <summary>
-/// Cat class - demonstrates INHERITANCE and POLYMORPHISM.
-/// Inherits from abstract Pet class and provides unique cat-specific behaviors.
+/// Inherits from  Pet class and provides unique cat-specific behaviors.
 /// Special Ability: Nine Lives - can regenerate health over time.
 /// </summary>
 public class Cat : Pet
@@ -12,15 +11,12 @@ public class Cat : Pet
     // Constructor - calls base Pet constructor
     public Cat(string name) : base(name)
     {
-        livesRemaining = 9;
+        livesRemaining = MaxLives;
     }
 
     public int LivesRemaining => livesRemaining;
 
-    // POLYMORPHISM: Override abstract method with cat-specific implementation
-    /// <summary>
-    /// Cats meow when making sounds.
-    /// </summary>
+   
     public override void MakeSound()
     {
         Console.WriteLine($"{Name} says: Meow~ 🐱");
@@ -28,68 +24,59 @@ public class Cat : Pet
         Console.WriteLine($"{Name} purrs softly...");
     }
 
-    // POLYMORPHISM: Override abstract method
-    /// <summary>
-    /// Returns description of cat's special ability.
-    /// </summary>
+    
+    // Returns description of cat's special ability.
     public override string GetSpecialAbility()
     {
-        return $"Nine Lives - Can regenerate health! ({livesRemaining} lives remaining)";
+        return $"Nine Lives - Auto-revive on death! ({livesRemaining} lives remaining)";
     }
 
-    // POLYMORPHISM: Override virtual method for unique cat behavior
-    /// <summary>
-    /// Cats are independent and play by themselves with less energy.
-    /// </summary>
-    public override void Play()
+    
+    // Implementation of Play. Less Happiness gain  / lose less Hunger
+    public override string Play()
     {
-        Console.WriteLine($"{Name} is playing independently with a toy mouse! 🐭");
-        Console.WriteLine($"{Name} pounces and swats at the toy gracefully!");
-
         // Cats are more independent - moderate happiness gain, less hunger loss
         Happiness += 18;  // Slightly less than base Pet (20)
         Hunger -= 7;      // Less hunger loss than dogs (10) - cats conserve energy
 
-        Console.WriteLine($"{Name} seems content with the solo playtime.");
+        return $"{Name} is playing independently with a toy mouse! 🐭\n{Name} pounces and swats at the toy gracefully!\n{Name} seems content with the solo playtime.";
     }
 
     /// <summary>
-    /// Special cat ability: Use one of nine lives to regenerate health.
-    /// Cats can recover from poor health conditions.
+    /// Special cat ability: Manually use one of nine lives to restore health.
     /// </summary>
-    public void UseNineLives()
+    public string UseSpecialAbility()
     {
-        if (livesRemaining <= 0)
+        if (!CanUseAbility())
         {
-            Console.WriteLine($"{Name} has no lives remaining to use!");
-            return;
+            return $"{Name} has no lives remaining";
         }
 
-        if (Health >= 80)
-        {
-            Console.WriteLine($"{Name} is already healthy! No need to use a life.");
-            return;
-        }
-
+        // Restore health to full
+        Health = 100;
         livesRemaining--;
-        Console.WriteLine($"{Name} uses the power of nine lives! ✨");
-        Console.WriteLine($"Mystical cat energy flows through {Name}...");
-
-        Health += 35;
-        Happiness += 10;
-
-        Console.WriteLine($"Health significantly restored! Lives remaining: {livesRemaining}/9");
+        return $"{Name} used Nine Lives! Health restored to 100. ({livesRemaining} lives remaining)";
     }
 
-    /// <summary>
-    /// Cats naturally regenerate a small amount of health over time.
-    /// This is a passive ability that triggers during updates.
-    /// </summary>
-    public void PassiveRegeneration()
+    
+    // Check if the cat can use its special ability.
+    public bool CanUseAbility()
     {
-        if (Health < 100 && livesRemaining > 0)
+        return livesRemaining > 0;
+    }
+
+    
+    // Update method with auto-revive on death.
+    public override void Update(double deltaTime)
+    {
+        base.Update(deltaTime);
+
+        // Auto-revive if dead and has lives remaining
+        if (!IsAlive && CanUseAbility())
         {
-            Health += 1;
+            Health = 100;
+            livesRemaining--;
+            Console.WriteLine($"\n🐱 {Name} used a life! {livesRemaining} lives remaining.\n");
         }
     }
 }
