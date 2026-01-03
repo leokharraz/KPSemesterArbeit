@@ -5,7 +5,7 @@ namespace VirtualPetC_.Core.Pets;
 /// <summary>
 /// Abstract base class representing a virtual pet.
 /// </summary>
-public abstract class Pet
+public abstract class BasePet
 {
     // Constants - Stat boundaries
     private const int MinStat = 0;
@@ -92,7 +92,7 @@ public abstract class Pet
     public bool IsIll => isIll;
 
     // Constructor
-    protected Pet(string name)
+    protected BasePet(string name)
     {
         Name = name;
         hunger = 100;  // Start full (100 = full, 0 = starving)

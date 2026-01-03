@@ -14,10 +14,10 @@ namespace VirtualPetC_
         {
             try
             {
-                // DEPENDENCY INVERSION: Create concrete UI implementation
+                
                 IUserInterface ui = new MenuSystem();
 
-                // DEPENDENCY INJECTION: GameManager depends on IUserInterface abstraction
+               
                 GameManager game = new GameManager(ui);
 
                 // Start the game

@@ -5,7 +5,7 @@ namespace VirtualPetC_.Core.Pets;
 /// Inherits from abstract Pet class and provides unique dog-specific behaviors.
 /// Special Ability: Loyalty - maintains happiness longer than other pets.
 /// </summary>
-public class Dog : Pet
+public class Dog : BasePet
 {
     private bool loyaltyActive;
     private DateTime loyaltyEndTime;
@@ -23,7 +23,7 @@ public class Dog : Pet
     // Implementation of MakeSound Woof Woof
     public override void MakeSound()
     {
-        Console.WriteLine($"{Name} says: Woof! Woof! 🐕");
+        Console.WriteLine($"{Name} says: Woof! Woof!");
         Happiness += 5;
         Console.WriteLine($"{Name} wags tail happily!");
     }
@@ -46,7 +46,7 @@ public class Dog : Pet
         Happiness += 25;  // Base Pet gives 20, dogs get 25
         Hunger -= 10;  // Playing makes pet hungry
 
-        return $"{Name} is playing fetch! 🎾\n{Name} brings the ball back with tail wagging!\n{Name} is very happy but getting hungry from all that running!";
+        return $"{Name} is playing fetch! \n{Name} brings the ball back with tail wagging!\n{Name} is very happy but getting hungry from all that running!";
     }
 
     

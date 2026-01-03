@@ -11,7 +11,7 @@ namespace VirtualPetC_.Core;
 /// </summary>
 public class GameManager
 {
-    private Pet? currentPet;
+    private BasePet? currentPet;
     private readonly IUserInterface ui;
     private bool isGameRunning;
     private DateTime lastUpdateTime;
@@ -29,9 +29,8 @@ public class GameManager
         lastUpdateTime = DateTime.Now;
     }
 
-    /// <summary>
-    /// Starts and runs the virtual pet simulator.
-    /// </summary>
+
+    // Starts and runs the virtual pet simulator.
     public void Start()
     {
         ui.DisplayWelcome();
@@ -43,16 +42,14 @@ public class GameManager
         }
     }
 
-    /// <summary>
-    /// Creates a new pet based on user choice.
-    /// Demonstrates POLYMORPHISM - different pet types instantiated based on choice.
-    /// </summary>
+
+    // Creates a new pet based on user choice.
     private void CreateNewPet()
     {
         PetType petType = ui.GetPetTypeChoice();
         string petName = ui.GetPetName();
 
-        // POLYMORPHISM: Create different pet types, all stored as Pet base class reference
+        // Create different pet types, all stored as Pet base class reference
         currentPet = petType switch
         {
             PetType.Dog => new Dog(petName),
@@ -62,18 +59,17 @@ public class GameManager
         };
 
         Console.Clear();
-        Console.WriteLine($"\n✨ You've adopted a {petType} named {petName}! ✨\n");
+        Console.WriteLine($"\nYou've adopted a {petType} named {petName}!\n");
 
-        // POLYMORPHISM: MakeSound() behavior depends on runtime type
+        //MakeSound() behavior depends on runtime type
         currentPet.MakeSound();
 
         lastUpdateTime = DateTime.Now;
         ui.PauseForUser();
     }
 
-    /// <summary>
+
     /// Updates the pet's stats based on time elapsed since last update.
-    /// </summary>
     private void UpdatePet()
     {
         if (currentPet == null) return;
@@ -85,9 +81,8 @@ public class GameManager
         lastUpdateTime = now;
     }
 
-    /// <summary>
+
     /// Main game loop - continues until player exits or pet dies.
-    /// </summary>
     private void RunGameLoop()
     {
         Console.Clear();
@@ -137,7 +132,6 @@ public class GameManager
 
     /// <summary>
     /// Executes the player's chosen action.
-    /// Demonstrates ENCAPSULATION - actions go through Pet class methods.
     /// </summary>
     /// <param name="choice">Player's menu choice</param>
     private void ExecuteAction(int choice)
@@ -170,12 +164,10 @@ public class GameManager
                 break;
 
             case 5: // Interact (Make Sound)
-                // POLYMORPHISM: MakeSound() is different for each pet type
                 currentPet.MakeSound();
                 break;
 
             case 6: // Use Special Ability
-                // POLYMORPHISM: Different special abilities for each pet type
                 ui.UseSpecialAbility(currentPet);
                 break;
 

@@ -5,25 +5,21 @@ namespace VirtualPetC_.Enums;
 /// </summary>
 public enum AgeStage
 {
-    /// <summary>
-    /// Baby stage: 0-5 minutes old, higher hunger rate
-    /// </summary>
+    
+    // Baby stage: 0-5 minutes old, higher hunger rate
     Baby,
 
-    /// <summary>
-    /// Adult stage: 5-15 minutes old, peak performance
-    /// </summary>
+    
+    // Adult stage: 5-15 minutes old, peak performance
     Adult,
 
-    /// <summary>
-    /// Elderly stage: 15+ minutes old, slower decay but lower max health
-    /// </summary>
+    
+    // Elderly stage: 15+ minutes old, slower decay but lower max health
     Elderly
 }
 
-/// <summary>
-/// Represents the different types of pets available
-/// </summary>
+
+// Represents the different types of pets available
 public enum PetType
 {
     Dog,

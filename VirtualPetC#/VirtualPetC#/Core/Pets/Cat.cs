@@ -4,7 +4,7 @@ namespace VirtualPetC_.Core.Pets;
 /// Inherits from  Pet class and provides unique cat-specific behaviors.
 /// Special Ability: Nine Lives - can regenerate health over time.
 /// </summary>
-public class Cat : Pet
+public class Cat : BasePet
 {
     private int livesRemaining;
 
@@ -39,7 +39,7 @@ public class Cat : Pet
         Happiness += 18;  // Slightly less than base Pet (20)
         Hunger -= 7;      // Less hunger loss than dogs (10) - cats conserve energy
 
-        return $"{Name} is playing independently with a toy mouse! 🐭\n{Name} pounces and swats at the toy gracefully!\n{Name} seems content with the solo playtime.";
+        return $"{Name} is playing independently with a toy mouse! \n{Name} pounces and swats at the toy gracefully!\n{Name} seems content with the solo playtime.";
     }
 
     /// <summary>

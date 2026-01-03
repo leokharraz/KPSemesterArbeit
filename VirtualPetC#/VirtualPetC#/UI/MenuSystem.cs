@@ -3,16 +3,13 @@ using VirtualPetC_.Enums;
 
 namespace VirtualPetC_.UI;
 
-/// <summary>
+
 /// MenuSystem handles all console input/output for the virtual pet simulator.
 /// Demonstrates separation of concerns - UI logic separated from business logic.
-/// Implements IUserInterface to demonstrate DEPENDENCY INVERSION PRINCIPLE.
-/// </summary>
 public class MenuSystem : IUserInterface
 {
-    /// <summary>
-    /// Displays the welcome message and game instructions.
-    /// </summary>
+    
+    // Displays the welcome message and game instructions.
     public void DisplayWelcome()
     {
         Console.Clear();
@@ -26,10 +23,8 @@ public class MenuSystem : IUserInterface
         Console.ReadKey();
     }
 
-    /// <summary>
+    
     /// Gets the pet type choice from the user.
-    /// </summary>
-    /// <returns>PetType enum value</returns>
     public PetType GetPetTypeChoice()
     {
         Console.Clear();
@@ -74,7 +69,7 @@ public class MenuSystem : IUserInterface
     /// Displays the main action menu.
     /// </summary>
     /// <param name="pet">The current pet to show actions for</param>
-    public void DisplayActionMenu(Pet pet)
+    public void DisplayActionMenu(BasePet pet)
     {
         Console.WriteLine("\n╔════════════════════════════════════════════╗");
         Console.WriteLine("║              WHAT WILL YOU DO?             ║");
@@ -92,9 +87,6 @@ public class MenuSystem : IUserInterface
     /// <summary>
     /// Gets a valid menu choice from the user.
     /// </summary>
-    /// <param name="min">Minimum valid choice</param>
-    /// <param name="max">Maximum valid choice</param>
-    /// <param name="prompt">Prompt message</param>
     /// <returns>Valid choice integer</returns>
     public int GetValidChoice(int min, int max, string prompt = "\nEnter your choice: ")
     {
@@ -111,14 +103,13 @@ public class MenuSystem : IUserInterface
 
     /// <summary>
     /// Displays a pet-specific special ability menu and executes it.
-    /// Demonstrates runtime polymorphism - different behavior based on pet type.
+    /// different behavior based on pet type.
     /// </summary>
-    /// <param name="pet">The pet to use special ability</param>
-    public void UseSpecialAbility(Pet pet)
+    public void UseSpecialAbility(BasePet pet)
     {
         Console.WriteLine($"\n--- Using {pet.Name}'s Special Ability ---");
 
-        // POLYMORPHISM: Different behavior based on runtime type
+       // Different behavior based on runtime type
         string result = pet switch
         {
             Dog dog when dog.CanUseAbility() => dog.UseSpecialAbility(),
@@ -137,7 +128,7 @@ public class MenuSystem : IUserInterface
     /// Displays a warning if pet stats are critical.
     /// </summary>
     /// <param name="pet">Pet to check</param>
-    public void DisplayWarnings(Pet pet)
+    public void DisplayWarnings(BasePet pet)
     {
         bool hasWarning = false;
 
@@ -198,17 +189,14 @@ public class MenuSystem : IUserInterface
         }
     }
 
-    /// <summary>
-    /// Displays a separator line for better readability.
-    /// </summary>
+    // Displays a separator line for better readability.
     public void DisplaySeparator()
     {
         Console.WriteLine("\n" + new string('─', 48));
     }
 
-    /// <summary>
-    /// Pauses and waits for user to press a key.
-    /// </summary>
+
+    // Pauses and waits for user to press a key.
     public void PauseForUser(string message = "\nPress any key to continue...")
     {
         Console.WriteLine(message);
@@ -218,8 +206,7 @@ public class MenuSystem : IUserInterface
     /// <summary>
     /// Displays the game over screen.
     /// </summary>
-    /// <param name="pet">The pet that was being cared for</param>
-    public void DisplayGameOver(Pet pet)
+    public void DisplayGameOver(BasePet pet)
     {
         Console.Clear();
         Console.WriteLine("╔════════════════════════════════════════════╗");
@@ -245,10 +232,7 @@ public class MenuSystem : IUserInterface
         Console.WriteLine("\nThank you for playing Virtual Pet Simulator!");
     }
 
-    /// <summary>
     /// Displays a message to the user.
-    /// </summary>
-    /// <param name="message">Message to display</param>
     public void DisplayMessage(string message)
     {
         Console.WriteLine(message);

@@ -2,10 +2,9 @@ namespace VirtualPetC_.Core.Pets;
 
 /// <summary>
 /// Bird class 
-/// Inherits from abstract Pet class and provides unique bird-specific behaviors.
 /// Special Ability: Song - singing boosts all stats slightly.
 /// </summary>
-public class Bird : Pet
+public class Bird : BasePet
 {
     private int songsPerformed;
     private double songCooldownRemaining;
@@ -46,7 +45,7 @@ public class Bird : Pet
         Happiness += 22;  // Between dog (25) and cat (18)
         Hunger -= 8;      // Between dog (10) and cat (7)
 
-        return $"{Name} is flying around the room! 🦅\n{Name} does aerial acrobatics and loops in the air!\n{Name} lands gracefully, chirping with joy!";
+        return $"{Name} is flying around the room! \n{Name} does aerial acrobatics and loops in the air!\n{Name} lands gracefully, chirping with joy!";
     }
 
     
