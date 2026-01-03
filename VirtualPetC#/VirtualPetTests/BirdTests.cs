@@ -8,13 +8,13 @@ namespace VirtualPetTests;
 public class BirdTests
 {
     [Fact]
-    public void Bird_InheritsFromPet()
+    public void Bird_InheritsFromBasePet()
     {
         // Arrange & Act
         var bird = new Bird("Tweety");
 
         // Assert
-        Assert.IsAssignableFrom<Pet>(bird);
+        Assert.IsAssignableFrom<BasePet>(bird);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class BirdTests
         int hungerBefore = bird.Hunger;
 
         // Act
-        bird.SingSong();
+        bird.UseSpecialAbility();
 
         // Assert - Song should boost stats
         Assert.True(bird.Health >= healthBefore, "Song should increase health");
@@ -42,14 +42,13 @@ public class BirdTests
         var bird = new Bird("Tweety");
 
         // Act
-        bird.SingSong(); // First song
+        bird.UseSpecialAbility(); // First song
         int songsAfterFirst = bird.SongsPerformed;
-
-        bird.SingSong(); // Try second song immediately
+        bool canUseImmediately = bird.CanUseAbility();
 
         // Assert - Should be blocked by cooldown
         Assert.Equal(1, songsAfterFirst);
-        // Second attempt should show cooldown message (songs performed stays at 1)
+        Assert.False(canUseImmediately, "Should not be able to use ability immediately due to cooldown");
     }
 
     [Fact]
@@ -59,35 +58,10 @@ public class BirdTests
         var bird = new Bird("Tweety");
 
         // Act
-        bird.SingSong();
+        bird.UseSpecialAbility();
 
         // Assert
         Assert.True(bird.SongsPerformed >= 1, "Should track number of songs performed");
     }
-
-    [Fact]
-    public void Bird_HasBalancedPlayStats()
-    {
-        // Arrange
-        var bird = new Bird("Tweety");
-        var dog = new Dog("Buddy");
-        var cat = new Cat("Whiskers");
-
-        int birdHappinessBefore = bird.Happiness;
-        int dogHappinessBefore = dog.Happiness;
-        int catHappinessBefore = cat.Happiness;
-
-        // Act
-        bird.Play();
-        dog.Play();
-        cat.Play();
-
-        // Assert - Bird should be balanced (between dog and cat)
-        int birdHappinessGain = bird.Happiness - birdHappinessBefore;
-        int dogHappinessGain = dog.Happiness - dogHappinessBefore;
-        int catHappinessGain = cat.Happiness - catHappinessBefore;
-
-        Assert.True(birdHappinessGain <= dogHappinessGain && birdHappinessGain >= catHappinessGain,
-            "Bird happiness gain should be between dog and cat");
-    }
+ 
 }

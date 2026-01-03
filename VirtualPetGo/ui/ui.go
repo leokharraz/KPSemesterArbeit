@@ -52,7 +52,7 @@ func (cui *ConsoleUI) DisplayStatus(p pet.Pet) {
 	// Header
 	fmt.Printf("\n=== %s's Status ===\n", status.Name)
 	fmt.Printf("Type: %s\n", status.Type)
-	fmt.Printf("Age: %.2f minutes (%s)\n", status.Age, status.AgeStage)
+	fmt.Printf("Age: %.2f Years (%s)\n", status.Age, status.AgeStage)
 
 	// Stats with progress bars
 	fmt.Printf("Health:      %d/100 [%s]\n", status.Health, makeProgressBar(status.Health))

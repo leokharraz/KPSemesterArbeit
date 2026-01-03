@@ -58,7 +58,6 @@ func (gm *GameManager) Start() {
 }
 
 // createPet handles pet creation phase
-// createPet handles pet creation phase
 func (gm *GameManager) createPet() {
 	// Display pet selection menu
 	gm.ui.DisplayPetSelection()
@@ -104,7 +103,9 @@ func (gm *GameManager) gameLoop() {
 
 		// Check if pet is still alive
 		if !gm.currentPet.IsAlive() {
-			fmt.Printf("\n💀 %s has died... Game Over.\n", gm.currentPet.GetStatus().Name)
+			gm.ui.DisplayStatus(gm.currentPet)
+			fmt.Printf("\n %s has died... Game Over.\n", gm.currentPet.GetStatus().Name)
+			utils.WaitForEnter()
 			break
 		}
 		gm.ui.DisplayStatus(gm.currentPet)

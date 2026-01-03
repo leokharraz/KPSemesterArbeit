@@ -17,7 +17,6 @@ public class GameManager
     private DateTime lastUpdateTime;
 
     /// <summary>
-    /// Constructor demonstrates DEPENDENCY INJECTION.
     /// GameManager depends on IUserInterface interface, not concrete implementation.
     /// This allows swapping UI implementations without changing GameManager code.
     /// </summary>
@@ -148,7 +147,7 @@ public class GameManager
                 break;
 
             case 2: // Play
-                // POLYMORPHISM: Play() behavior differs for Dog, Cat, Bird
+                // Play() behavior differs for Dog, Cat, Bird
                 string playResult = currentPet.Play();
                 ui.DisplayMessage(playResult);
                 break;

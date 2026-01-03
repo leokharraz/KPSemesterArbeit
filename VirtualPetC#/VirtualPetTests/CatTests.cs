@@ -8,13 +8,13 @@ namespace VirtualPetTests;
 public class CatTests
 {
     [Fact]
-    public void Cat_InheritsFromPet()
+    public void Cat_InheritsFromBasePet()
     {
         // Arrange & Act
         var cat = new Cat("Whiskers");
 
         // Assert
-        Assert.IsAssignableFrom<Pet>(cat);
+        Assert.IsAssignableFrom<BasePet>(cat);
     }
 
     [Fact]
@@ -34,20 +34,16 @@ public class CatTests
         var cat = new Cat("Whiskers");
 
         // Damage the cat first by simulating time
-        Thread.Sleep(10000); // Wait 10 seconds
-        cat.DisplayStatus(); // Trigger update
+        cat.Update(30); // Simulate 30 seconds
 
         int livesBefore = cat.LivesRemaining;
-        int healthBefore = cat.Health;
 
-        // Act - Only works if health is low enough
-        cat.UseNineLives();
+        // Act
+        cat.UseSpecialAbility();
 
-        // Assert
-        if (healthBefore < 80)
-        {
-            Assert.True(cat.LivesRemaining <= livesBefore, "Should use a life if health was low");
-        }
+        // Assert - Should use a life and restore health
+        Assert.Equal(100, cat.Health);
+        Assert.Equal(livesBefore - 1, cat.LivesRemaining);
     }
 
     [Fact]

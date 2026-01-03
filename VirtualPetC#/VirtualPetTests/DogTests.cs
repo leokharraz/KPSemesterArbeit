@@ -8,13 +8,13 @@ namespace VirtualPetTests;
 public class DogTests
 {
     [Fact]
-    public void Dog_InheritsFromPet()
+    public void Dog_InheritsFromBasePet()
     {
         // Arrange & Act
         var dog = new Dog("Buddy");
 
         // Assert
-        Assert.IsAssignableFrom<Pet>(dog);
+        Assert.IsAssignableFrom<BasePet>(dog);
     }
 
     [Fact]
@@ -35,15 +35,13 @@ public class DogTests
     {
         // Arrange
         var dog = new Dog("Buddy");
-        int happinessBefore = dog.Happiness;
-        int healthBefore = dog.Health;
 
         // Act
-        dog.UseLoyaltyBoost();
+        dog.UseSpecialAbility();
 
         // Assert
-        Assert.True(dog.Happiness >= happinessBefore, "Loyalty boost should increase happiness");
-        Assert.True(dog.Health >= healthBefore, "Loyalty boost should increase health");
+        Assert.True(dog.IsLoyaltyActive, "Loyalty should be active after using ability");
+        Assert.True(dog.CanUseAbility() == false, "Should not be able to use ability when loyalty is active");
     }
 
     [Fact]

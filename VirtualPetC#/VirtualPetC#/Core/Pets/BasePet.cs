@@ -105,8 +105,17 @@ public abstract class BasePet
     }
 
     /// <summary>
+    /// Sets the illness state. Protected method for testing purposes.
+    /// </summary>
+    /// <param name="ill">Whether the pet should be ill</param>
+    protected void SetIllnessForTesting(bool ill)
+    {
+        isIll = ill;
+    }
+
+    /// <summary>
     /// Makes the pet produce its characteristic sound.
-    /// Each pet type implements this differently 
+    /// Each pet type implements this differently
     /// </summary>
     public abstract void MakeSound();
 
