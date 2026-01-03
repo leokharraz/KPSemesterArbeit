@@ -430,6 +430,27 @@ sequenceDiagram
 - `Update()` method in `BasePet` provides algorithm structure
 - Subclasses override hooks like `GetHappinessDecayModifier()` to customize behavior
 
+## References
+
+### Documentation & Tutorials
+- [.NET Documentation](https://docs.microsoft.com/en-us/dotnet/) - Official C# and .NET documentation
+- [Go Documentation](https://golang.org/doc/) - Official Go programming language documentation
+- [xUnit Testing Framework](https://xunit.net/) - Unit testing framework for C#
+- [Go Testing Package](https://pkg.go.dev/testing) - Standard Go testing documentation
+
+### Design Patterns & Best Practices
+- [SOLID Principles](https://en.wikipedia.org/wiki/SOLID) - Object-oriented design principles
+- [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle) - Used in GameManager design
+- [Template Method Pattern](https://refactoring.guru/design-patterns/template-method) - Used in BasePet.Update()
+
+### Language-Specific Resources
+- [C# Abstract Classes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/abstract-and-sealed-classes-and-class-members)
+- [C# Interfaces](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/)
+- [Go Interfaces](https://go.dev/tour/methods/9)
+- [Go Embedding](https://golang.org/doc/effective_go#embedding) - Used for composition-based inheritance
+
+### Console UI Libraries
+- [Simplifying Your Terminal Experience with Go: Clearing the Screen](https://dev.to/muhammadsaim/simplifying-your-terminal-experience-with-go-clearing-the-screen-1p7f) - Screen clearing utility for Go
 
 ---
 
