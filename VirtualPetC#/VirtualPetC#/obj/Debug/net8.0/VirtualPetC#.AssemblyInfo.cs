@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VirtualPetC#")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78189a6573946980397a9968acd72545ed442a22")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98e5fa0c7315797dc12eb409b7b77ea081110299")]
 [assembly: System.Reflection.AssemblyProductAttribute("VirtualPetC#")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VirtualPetC#")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
