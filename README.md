@@ -118,14 +118,6 @@ VirtualPetGo/
    ```bash
    dotnet run
    ```
-
-**Alternative (using executable):**
-```bash
-dotnet build -c Release
-cd bin/Release/net8.0
-./VirtualPetC#.exe
-```
-
 ### Go Version
 
 **Prerequisites:**
@@ -137,21 +129,13 @@ cd bin/Release/net8.0
    cd VirtualPetGo
    ```
 
-2. Install dependencies:
-   ```bash
-   go mod download
-   ```
-
 3. Run the application:
    ```bash
    go run main.go
    ```
 
-**Alternative (build executable):**
-```bash
-go build -o VirtualPetGo.exe
-./VirtualPetGo.exe
-```
+### Build Folder
+It is also possible to run the build from the .exe file. You can find them  in the Builds folder.
 
 ## How to Run Tests
 
