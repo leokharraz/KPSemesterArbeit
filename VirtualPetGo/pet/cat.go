@@ -4,14 +4,12 @@ import "fmt"
 
 type Cat struct {
 	BasePet
-	furColor       string
 	livesRemaining int
 }
 
-func NewCat(name, furColor string) *Cat {
+func NewCat(name string) *Cat {
 	return &Cat{
 		BasePet:        newBasePet(name),
-		furColor:       furColor,
 		livesRemaining: MaxLives,
 	}
 }

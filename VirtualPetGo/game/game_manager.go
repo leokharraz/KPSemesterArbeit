@@ -22,27 +22,6 @@ func NewGameManager(userInterface ui.IUserInterface) *GameManager {
 	}
 }
 
-func (gm *GameManager) CreatePet(petType int, name string, variant string) {
-	switch petType {
-	case 1:
-		gm.currentPet = pet.NewBird(name, variant)
-
-	}
-	gm.lastUpdateTime = time.Now()
-}
-
-func (gm *GameManager) UpdatePet() {
-	if gm.currentPet == nil {
-		return
-	}
-
-	//Calculate time since last Update
-	now := time.Now()
-	deltaTime := now.Sub(gm.lastUpdateTime).Seconds()
-
-	gm.currentPet.Update(deltaTime)
-	gm.lastUpdateTime = now
-}
 func (gm *GameManager) GetPet() pet.Pet {
 	return gm.currentPet
 }
@@ -73,21 +52,15 @@ func (gm *GameManager) createPet() {
 	var variant string
 	switch petType {
 	case 1: // Dog
-		fmt.Print("Enter your dog's breed: ")
-		variant, _ = utils.ReadString()
-		gm.currentPet = pet.NewDog(name, variant)
+		gm.currentPet = pet.NewDog(name)
 		fmt.Printf("\n%s the %s has been born!\n", name, variant)
 
 	case 2: // Cat
-		fmt.Print("Enter your cat's fur color: ")
-		variant, _ = utils.ReadString()
-		gm.currentPet = pet.NewCat(name, variant)
+		gm.currentPet = pet.NewCat(name)
 		fmt.Printf("\n%s the %s cat has been born!\n", name, variant)
 
 	case 3: // Bird
-		fmt.Print("Enter your bird's species: ")
-		variant, _ = utils.ReadString()
-		gm.currentPet = pet.NewBird(name, variant)
+		gm.currentPet = pet.NewBird(name)
 		fmt.Printf("\n%s the %s has been born!\n", name, variant)
 	}
 

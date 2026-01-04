@@ -4,14 +4,12 @@ import "fmt"
 
 type Bird struct {
 	BasePet
-	featherColor string
 	songCooldown float64
 }
 
-func NewBird(name string, featherColor string) *Bird {
+func NewBird(name string) *Bird {
 	return &Bird{
 		BasePet:      newBasePet(name),
-		featherColor: featherColor,
 		songCooldown: 0,
 	}
 }

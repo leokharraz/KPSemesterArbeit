@@ -33,7 +33,7 @@ type SpecialAbility interface {
 type Status struct {
 	Name     string
 	Type     string   // "Dog", "Cat", "Bird"
-	Age      float64  // Age in minutes
+	Age      float64  // Age in "Years"
 	AgeStage AgeStage // Baby, Adult, or Elderly
 
 	// Core stats (0-100)

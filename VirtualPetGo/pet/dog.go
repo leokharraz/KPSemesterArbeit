@@ -4,15 +4,13 @@ import "time"
 
 type Dog struct {
 	BasePet
-	breed          string
 	loyaltyActive  bool
 	loyaltyEndTime time.Time
 }
 
-func NewDog(name, breed string) *Dog {
+func NewDog(name string) *Dog {
 	return &Dog{
 		BasePet:       newBasePet(name),
-		breed:         breed,
 		loyaltyActive: false,
 	}
 }
