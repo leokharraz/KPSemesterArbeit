@@ -349,4 +349,4 @@ classDiagram
 
 ---
 
-**Developed as a semester project demonstrating OOP principles and cross-language implementation.**
+**Developed as a semester project to compare OOP principles in C# and Golang**
