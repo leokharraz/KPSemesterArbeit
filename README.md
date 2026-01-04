@@ -290,85 +290,7 @@ classDiagram
     GameManager o-- IUserInterface : depends on
 ```
 
-### Game Flow Diagram
 
-The following sequence diagram shows the main game loop flow:
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Program
-    participant GameManager
-    participant UI
-    participant Pet
-
-    User->>Program: Start Application
-    Program->>GameManager: Create(IUserInterface)
-    Program->>GameManager: Start()
-
-    GameManager->>UI: DisplayWelcome()
-    UI->>User: Show welcome message
-
-    GameManager->>UI: GetPetTypeChoice()
-    UI->>User: Display pet options
-    User->>UI: Select pet type
-
-    GameManager->>UI: GetPetName()
-    User->>UI: Enter pet name
-
-    GameManager->>Pet: Create new Pet(name)
-    Note over GameManager,Pet: Creates Dog, Cat, or Bird
-
-    loop Game Loop (while pet is alive)
-        GameManager->>Pet: Update(deltaTime)
-        Note over Pet: Stats decay based on time
-
-        Pet-->>GameManager: Updated stats
-
-        GameManager->>UI: DisplayStatus(pet)
-        UI->>User: Show pet stats
-
-        GameManager->>UI: DisplayWarnings(pet)
-        UI->>User: Show critical warnings
-
-        GameManager->>UI: DisplayActionMenu(pet)
-        UI->>User: Show menu options
-
-        User->>UI: Select action (1-8)
-        UI->>GameManager: Return choice
-
-        alt Feed
-            GameManager->>Pet: Feed()
-            Pet-->>GameManager: "Pet enjoyed meal!"
-        else Play
-            GameManager->>Pet: Play()
-            Pet-->>GameManager: Pet-specific play message
-        else Sleep
-            GameManager->>Pet: Sleep()
-            Pet-->>GameManager: "Pet took a nap!"
-        else Clean
-            GameManager->>Pet: Clean()
-            Pet-->>GameManager: "Pet is clean!" (cures illness)
-        else Use Special Ability
-            GameManager->>Pet: UseSpecialAbility()
-            Pet-->>GameManager: Ability-specific message
-        else Exit
-            User->>GameManager: Confirm exit
-            Note over GameManager: isGameRunning = false
-        end
-
-        GameManager->>UI: DisplayMessage(result)
-        UI->>User: Show action result
-
-        alt Pet died
-            GameManager->>UI: DisplayGameOver(pet)
-            UI->>User: "Pet has died..."
-            Note over GameManager: Exit loop
-        end
-    end
-
-    Program->>User: Exit application
-```
 
 
 
@@ -401,23 +323,22 @@ sequenceDiagram
 ### 2. Inheritance
 - `Dog`, `Cat`, and `Bird` inherit from `BasePet`
 - Shared functionality (Feed, Sleep, Clean) inherited from base class
-
-### 3. Polymorphism
+### 3. Embedding
+- In Go Embedding was used to have a similiar effect as Inheritance. `Dog`, `Cat`, and `Bird` have the `BasePet` struct embedded into their own struct
+### 4. Polymorphism
 - Different implementations of `MakeSound()`, `Play()`, and special abilities
 - Runtime polymorphism: `BasePet` reference can hold any pet type
 
-### 4. Encapsulation
+### 5. Encapsulation
 - Private fields with controlled access via properties
 - Stat values clamped between 0-100 internally
 - Protected methods for subclass-specific behavior
 
-### 5. Dependency Inversion Principle
+## Other Design Principles 
+### Dependency Inversion Principle
 - `GameManager` depends on `IUserInterface` interface, not concrete `MenuSystem`
 - Allows swapping UI implementations without changing game logic
 
-### 6. Template Method Pattern
-- `Update()` method in `BasePet` provides algorithm structure
-- Subclasses override hooks like `GetHappinessDecayModifier()` to customize behavior
 
 ## References
 
