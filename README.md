@@ -9,6 +9,7 @@ A console-based virtual pet simulator game implemented in both **C#** and **Go**
 - [How to Run](#how-to-run)
   - [C# Version](#c-version)
   - [Go Version](#go-version)
+  - [Builds](#Build-Folder)
 - [How to Run Tests](#how-to-run-tests)
   - [C# Tests](#c-tests)
   - [Go Tests](#go-tests)
