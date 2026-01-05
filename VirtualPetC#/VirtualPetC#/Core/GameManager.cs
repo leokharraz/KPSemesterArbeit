@@ -171,7 +171,7 @@ public class GameManager
                 break;
 
             case 7: // View Status
-                Console.WriteLine("(Status already displayed above)");
+                currentPet.DisplayStatus();
                 break;
 
             case 8: // Exit
