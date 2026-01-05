@@ -9,6 +9,7 @@ A console-based virtual pet simulator game implemented in both **C#** and **Go**
 - [How to Run](#how-to-run)
   - [C# Version](#c-version)
   - [Go Version](#go-version)
+  - [Builds](#Build-Folder)
 - [How to Run Tests](#how-to-run-tests)
   - [C# Tests](#c-tests)
   - [Go Tests](#go-tests)
@@ -118,14 +119,6 @@ VirtualPetGo/
    ```bash
    dotnet run
    ```
-
-**Alternative (using executable):**
-```bash
-dotnet build -c Release
-cd bin/Release/net8.0
-./VirtualPetC#.exe
-```
-
 ### Go Version
 
 **Prerequisites:**
@@ -137,21 +130,13 @@ cd bin/Release/net8.0
    cd VirtualPetGo
    ```
 
-2. Install dependencies:
-   ```bash
-   go mod download
-   ```
-
 3. Run the application:
    ```bash
    go run main.go
    ```
 
-**Alternative (build executable):**
-```bash
-go build -o VirtualPetGo.exe
-./VirtualPetGo.exe
-```
+### Build Folder
+It is also possible to run the build from the .exe file. You can find them  in the Builds folder.
 
 ## How to Run Tests
 
@@ -364,4 +349,4 @@ classDiagram
 
 ---
 
-**Developed as a semester project demonstrating OOP principles and cross-language implementation.**
+**Developed as a semester project to compare OOP principles in C# and Golang**
